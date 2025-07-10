@@ -1,0 +1,28 @@
+name: dockerized-fullstack-app-saurabh
+
+services:
+  # Backend service
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      - WEATHER_API_KEY=5nSEpuHNgzHSVq3I19qWQohNTwKHgEkJ
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  # Frontend service
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge 
